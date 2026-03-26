@@ -1,0 +1,120 @@
+# .cursorrules
+
+You are working on a Python-first AI application for perimenopause-focused facial and symptom tracking.
+The user is an experienced technical developer with computer vision and ML expertise.
+Optimize for correctness, minimal diffs, and architectural discipline over speed.
+
+## Primary goals
+- Build a deterministic backend first.
+- Keep image processing, data storage, and orchestration clearly separated.
+- Preserve existing work. Never rewrite large files unless explicitly asked.
+- Make the smallest possible safe change.
+
+## Architecture rules
+- Layer 1 only unless explicitly instructed otherwise:
+  - deterministic app backend
+  - facial image ingestion
+  - session history/timeline
+  - MediaPipe landmark extraction
+  - OpenCV / scikit-image feature extraction
+  - report generation primitives
+- Do NOT add OpenClaw orchestration unless the user explicitly asks for it.
+- Do NOT mix external product-search logic into the deterministic backend.
+- Keep external evidence gathering and recommendation orchestration separate from CV analysis.
+
+## Stack assumptions
+- Python backend preferred
+- FastAPI preferred for APIs
+- MediaPipe for facial landmarks
+- OpenCV and scikit-image for classical image processing
+- Postgres or SQLite acceptable depending on project stage
+- Clear modular services preferred over monolithic scripts
+
+## Editing behavior
+- Never rewrite an entire file when a targeted patch will do.
+- Never remove user code unless explicitly instructed.
+- Never rename public functions, routes, schemas, or modules without approval.
+- Never change architecture, folder structure, or dependencies unless necessary and explained first.
+- Before risky edits, provide a short patch plan.
+- If the request is broad, ask to operate on a narrow set of files or propose a staged patch.
+- Preserve comments, TODOs, and unfinished scaffolding unless asked to clean them up.
+- Preserve backward compatibility by default.
+
+## Diff discipline
+- Favor the smallest possible diff.
+- Edit only the files required for the task.
+- When touching a core file, avoid unrelated cleanup.
+- Do not perform formatting-only churn unless requested.
+- If multiple files are needed, explain why each one must change.
+
+## Code quality rules
+- Prefer readable, production-usable Python.
+- Add type hints where practical.
+- Add docstrings for nontrivial public functions.
+- Add error handling for file I/O, invalid image input, and missing metadata.
+- Keep functions focused and testable.
+- Separate pure computation from I/O and API concerns.
+- Avoid hidden global state.
+
+## Computer vision rules
+- Treat MediaPipe as alignment / landmark infrastructure, not as final diagnosis.
+- Preserve raw images as source-of-truth inputs.
+- Do not use enhancement outputs as canonical measurements unless explicitly designed that way.
+- Prefer region-based metrics over unsupported diagnostic claims.
+- Be careful with lighting sensitivity, color-space assumptions, and preprocessing artifacts.
+- When proposing melasma-related methods, distinguish:
+  - alignment
+  - illumination normalization
+  - segmentation / localization
+  - measurement
+  - longitudinal comparison
+- Avoid overstating medical certainty.
+
+## Product/domain rules
+- This is a health-adjacent app, not a diagnostic medical device.
+- Avoid medical diagnosis language in code comments, copy, and output schemas.
+- Prefer terms like:
+  - observed pattern
+  - trend
+  - possible contributor
+  - user-reported symptom
+- The system should support concise, structured, data-informed outputs rather than generic chat text.
+
+## API and schema rules
+- Keep API contracts explicit and stable.
+- Use structured response models.
+- Prefer JSON outputs that can support cards like:
+  - observed
+  - trend
+  - possible drivers
+  - next steps
+- Do not bury important values in freeform text if they should be structured fields.
+
+## Testing rules
+- When adding or changing logic, add or update focused tests when practical.
+- For CV code, prefer small deterministic tests on intermediate outputs where possible.
+- Do not invent fake performance claims.
+
+## OpenClaw rules
+- OpenClaw is a later orchestration layer, not the deterministic backend.
+- If OpenClaw is introduced later, it should call backend tools/APIs rather than replace core CV code.
+- Do not assume automatic tool discovery.
+- Tool-exposed functions should remain explicit, stable, and testable.
+
+## Communication style
+- Be concise, technical, and direct.
+- Do not over-explain basic Python to this user.
+- When making changes, summarize:
+  - what changed
+  - why
+  - any risks
+  - next recommended step
+
+## Absolute do-not-do list
+- Do not rewrite whole scripts without explicit permission.
+- Do not erase user work.
+- Do not silently change behavior.
+- Do not add unnecessary frameworks.
+- Do not collapse layers into one script.
+- Do not move recommendation scraping into the deterministic backend.
+- Do not introduce cloud/GPU requirements unless explicitly justified.

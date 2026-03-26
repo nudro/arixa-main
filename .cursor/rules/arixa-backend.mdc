@@ -1,0 +1,24 @@
+---
+description: Arixa deterministic backend rules
+globs:
+  - "app/**/*.py"
+  - "tests/**/*.py"
+alwaysApply: true
+---
+
+You are editing Arixa, a Python FastAPI backend for deterministic facial and symptom analysis.
+
+Rules:
+- Layer 1 only: deterministic backend
+- No OpenClaw
+- No LLM calls
+- No frontend unless explicitly requested
+- Use smallest possible diff
+- Never rewrite whole files unless explicitly asked
+- Preserve public function names and route contracts
+- Keep CV code modular and testable
+- Separate registration, analysis, longitudinal logic, intake, and reports into distinct modules
+- Avoid medical diagnosis claims
+- Prefer structured JSON outputs over prose
+- Add focused tests for new logic when practical
+- Ask for a short patch plan before risky edits
