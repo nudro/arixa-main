@@ -83,6 +83,7 @@ class SessionImage(Base):
     usable: Mapped[bool] = mapped_column(Boolean, nullable=False, insert_default=True)
     quality_score: Mapped[float | None] = mapped_column(Float, nullable=True)
     landmark_status: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    registration_output: Mapped[dict[str, Any] | None] = mapped_column(JSON, nullable=True)
 
     capture_session: Mapped["CaptureSession"] = relationship(back_populates="session_images")
 

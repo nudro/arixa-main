@@ -1,0 +1,6 @@
+"""Deterministic CV constants and thresholds for analysis modules."""
+
+PIGMENT_L_THRESHOLD = 140.0
+PIGMENT_B_THRESHOLD = 145.0
+DEFAULT_STEP_SECONDS = 60
+DEFAULT_START_TIMESTAMP = "2026-01-01T00:00:00Z"
